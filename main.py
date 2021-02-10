@@ -3,7 +3,7 @@ import owoify
 from owoify import Owoifator 
 from telegrampy.ext import commands
 
-bot=commands.Bot('1615752769:AAGuRUymRac7r_U1o590QvT6S6HLd5FRpT8')
+bot=commands.Bot('')
 @bot.command()
 async def what(ctx):
 	await ctx.send('Список команд: /owo [word] преобразует написанное вами слово в его няшную версию. Пример использования: /owo Hello >>> Hewwo')
