@@ -1,36 +1,16 @@
-import telegrampy
-import owoify
-from owoify import Owoifator 
-from telegrampy.ext import commands
+from PIL import Image, ImageDraw, ImageFont
+import codecs
 
-bot=commands.Bot('')
-@bot.command()
-async def what(ctx):
-	await ctx.send('Список команд: /owo [word] преобразует написанное вами слово в его няшную версию. Пример использования: /owo Hello >>> Hewwo')
-
-@bot.command()
-async def owo(ctx, args):
-	owoifator = Owoifator()
-	args=owoifator.owoify(args)
-	await ctx.send(args+"(*^ω^)")
-
-@bot.command()
-async def понедельник(ctx):
-	await ctx.send('https://ibb.co/cLLyCht')
-
-@bot.command()
-async def вторник(ctx):
-	await ctx.send('https://ibb.co/bFYVqqg')
-
-@bot.command()
-async def среда(ctx):
-	await ctx.send('https://ibb.co/M9D36DH')
-
-@bot.command()
-async def четверг(ctx):
-	await ctx.send('https://ibb.co/LhyXHPk')
-
-@bot.command()
-async def пятница(ctx):
-	await ctx.send('https://ibb.co/NVD63cd')
-bot.run()
+persons = codecs.open('sources/names.txt', encoding="utf8")
+texts = codecs.open('sources/words.txt', encoding="utf8")
+font = ImageFont.truetype('sources/Montserrat-Black.ttf', size=32)
+template = Image.open('template/temp.jpg')
+for pers in persons:
+	draw_text = ImageDraw.Draw(template)
+	draw_text.text((218,450), f'{pers}', font=font, fill=(0,0,0))
+	template.save(pers.strip() + '.jpg')
+	for i in texts:
+		current = Image.open(pers.strip() + '.jpg')
+		new = ImageDraw.Draw(current)
+		new.text((200,500), f'{i}', font=font, fill=(0,0,0))
+		current.save(pers.strip() + ' ' + i + '.jpg')
